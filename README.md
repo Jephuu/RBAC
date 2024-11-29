@@ -49,20 +49,87 @@ This is a Node.js and Express.js project that implements Role-Based Access Contr
     JWT_SECRET=<Your JWT Secret>
     
 4.Start the server:
-
     npm start
+   
 API Endpoints
-Authentication
-Register
-POST /api/users/register
-Body:
+   Authentication
+  1. Register
+     POST /api/users/register
+     
+        Body:
+        {
+          "username": "testuser",
+          "email": "test@example.com",
+          "password": "password123",
+          "role": "User"
+        }
+  2. Login
+        POST /api/users/login
+     
+        Body:
+       {
+          "email": "test@example.com",
+          "password": "password123"
+       }
 
-{
-  "username": "testuser",
-  "email": "test@example.com",
-  "password": "password123",
-  "role": "User"
-}
+ Protected Routes
+  1.Get Profile
+    GET /api/users/profile
+    Requires Bearer Token in the Authorization header.
+    
+  2.Admin Access
+      GET /api/users/admin
+      Accessible only by users with the "Admin" role.
+      
+  3. Dashboard Access
+      GET /api/users/dashboard
+      Accessible by "Admin" and "Moderator".
+
+     
+  Role Management
+  1. Update User Role
+      PUT /api/users/update-role/:id
+      Body:
+       {
+          "role": "Admin"
+       }
+     Requires Bearer Token with "Admin" role.
+
+Testing with Thunder Client
+
+  1. Register a User:
+      Send a POST request to /api/users/register.
+
+  2. Login:
+      Send a POST request to /api/users/login and retrieve the token.
+
+  3. Access Protected Routes:
+      Use the token in the Authorization header as Bearer <token> to access protected routes.
+
+  4.  Update Role:
+      Use the PUT /api/users/update-role/:id endpoint with the user ID and the new role.             Include the admin token in the Authorization header.
+
+ Folder Structure
+   
+
+  ├── models
+  │   ├── User.js        // User model schema
+  │   └── Role.js        // Role model schema (if applicable)
+  ├── middlewares
+  │   └── authMiddleware.js // Authentication and role-based middleware
+  ├── routes
+  │   └── userRoutes.js  // User-related routes
+  ├── .env               // Environment variables
+  ├── server.js          // Entry point of the application
+  └── package.json       // Project dependencies and scripts
 
 
+License
+This project is licensed under the MIT License. Feel free to use and modify it.
+
+Author
+Developed by Jephy. 😊
+
+
+Save this as `README.md` in your project folder, and it will display nicely on GitHub! Let me know if you need any further adjustments. 😊
 
